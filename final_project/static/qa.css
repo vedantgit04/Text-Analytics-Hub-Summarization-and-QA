@@ -1,0 +1,268 @@
+:root {
+    --light-bg-color: #eaf7e1;
+    --light-container-bg: #ffffff;
+    --light-jumbotron-bg: #004d40;
+    --light-recent-question-bg: #d4edda; /* Light green for recent questions */
+    --light-recent-message-color: #004d40; /* Dark text for light mode */
+    --dark-bg-color: #121212;
+    --dark-container-bg: #1e1e1e;
+    --dark-jumbotron-bg: #1f1f1f;
+    --dark-recent-question-bg: #f8d7da; /* Light red for recent questions */
+    --dark-recent-message-color: #dc3545; /* Light red text for dark mode */
+    --text-color-light: #000000; /* Black text color for light mode */
+    --text-color-dark: #e0e0e0;
+    --button-bg-light: #0062cc;
+    --button-bg-dark: #004c99;
+    --button-text-light: #fff;
+    --button-text-dark: #fff;
+    --border-color-light: #ddd;
+    --border-color-dark: #555;
+    --light-chat-bg: #f5f5f5;
+    --dark-chat-bg: #2c2c2c;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--light-bg-color);
+    color: var(--text-color-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+body.dark-mode {
+    background-color: var(--dark-bg-color);
+    color: var(--text-color-dark);
+}
+
+.container {
+    background-color: var(--light-container-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    margin-top: 20px;
+    border: 1px solid var(--border-color-light);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+.container.dark-mode {
+    background-color: var(--dark-container-bg);
+    border-color: var(--border-color-dark);
+}
+
+.jumbotron {
+    background-color: var(--light-jumbotron-bg);
+    color: var(--text-color-dark);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    width: 93%; /* Full width within container */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 1px solid var(--border-color-light);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.jumbotron.dark-mode {
+    background-color: var(--dark-jumbotron-bg);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+h1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 50%;
+    height: 4px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+h1:hover::after {
+    transform: translateX(-50%) scaleX(1);
+    transform-origin: bottom left;
+}
+
+.chat-history {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: var(--light-chat-bg);
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column-reverse;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color-light);
+}
+.chat-history.dark-mode {
+    background-color: var(--dark-chat-bg);
+    border-color: var(--border-color-dark);
+}
+.chat-history:hover {
+    transform: translateX(-10px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.message {
+    text-align: left;
+    margin: 10px 0;
+    padding: 10px;
+    border-left: 5px solid #0062cc;
+    border-radius: 8px;
+    opacity: 0;
+    animation: fadeInMessage 0.5s forwards;
+    border: 1px solid var(--border-color-light);
+}
+.message.recent {
+    background-color: var(--light-recent-question-bg); /* Light green */
+    color: var(--light-recent-message-color); /* Dark text for light mode */
+}
+.message.recent.dark-mode {
+    background-color: var(--dark-recent-message-color); /* Light red */
+    color: var(--dark-recent-message-color); /* Light red text for dark mode */
+}
+
+@keyframes fadeInMessage {
+    to {
+        opacity: 1;
+    }
+}
+
+.message .question {
+    font-weight: bold;
+}
+.message .answer {
+    color: inherit;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0;
+    color: #444;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+label.dark-mode {
+    color: var(--text-color-dark);
+}
+
+textarea, input[type="text"] {
+    width: calc(100% - 24px);
+    padding: 14px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    font-size: 16px;
+    margin: 10px 0;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+textarea:focus, input[type="text"]:focus {
+    border-color: #0062cc;
+    background-color: #fafafa;
+    outline: none;
+}
+textarea.dark-mode, input[type="text"].dark-mode {
+    border-color: var(--border-color-dark);
+    background-color: #333;
+}
+
+input[type="button"] {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-light);
+    padding: 14px 22px;
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+input[type="button"]:hover {
+    background-color: #004c99;
+    transform: translateY(-2px);
+}
+input[type="button"].dark-mode {
+    background-color: var(--button-bg-dark);
+    border-color: var(--border-color-dark);
+}
+
+.spinner {
+    display: none;
+    margin: 20px auto;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #0062cc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.mode-toggle {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background-color: #0062cc;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.mode-toggle.dark-mode {
+    background-color: #004c99;
+}
+
+.page-transition {
+    opacity: 0;
+    animation: fadeInPage 0.5s forwards;
+}
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Exciting animations for various elements */
+.container, .jumbotron {
+    animation: slideIn 0.5s ease-out;
+}
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

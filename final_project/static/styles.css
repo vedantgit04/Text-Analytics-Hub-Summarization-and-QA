@@ -1,0 +1,125 @@
+body {
+    background: linear-gradient(to right, #e0eafc, #cfdef3); /* Light gradient background */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.container {
+    max-width: 800px; /* Restrict width for better layout */
+    margin: 50px auto; /* Center container horizontally */
+    padding: 20px;
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 12px; /* Rounded corners for the container */
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1); /* Subtle shadow for container */
+    opacity: 0; /* Initial opacity for fade-in effect */
+    animation: fadeIn 1s forwards; /* Fade-in animation */
+    animation-delay: 0.5s; /* Delay for container fade-in */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.jumbotron {
+    background-color: #ffffff;
+    color: #333333;
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow for more depth */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added transition for shadow */
+    margin-bottom: 40px; /* Increased space below jumbotron */
+    animation: jumbotronAnimation 1s forwards; /* Jumbotron animation */
+}
+
+@keyframes jumbotronAnimation {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.jumbotron:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0px 12px 40px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.jumbotron h1 {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 2.5rem;
+    color: #00796b; /* Updated color for more contrast */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.jumbotron p.lead {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #555555;
+}
+
+button {
+    margin: 15px 0; /* Space between buttons and text block */
+    background-color: #00796b; /* Updated to match jumbotron heading */
+    border-color: #00796b;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transitions for color, transform, and shadow */
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    border: none; /* Ensures button looks clean without border */
+    cursor: pointer; /* Pointer cursor for button */
+    display: inline-block; /* Align buttons horizontally */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+button:hover {
+    background-color: #004d40; /* Darker shade for hover effect */
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+button:active {
+    background-color: #00332d; /* Even darker shade for click effect */
+    transform: translateY(-1px); /* Slightly reduce lift effect on click */
+}
+
+.text-center {
+    text-align: center;
+}
+
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+    opacity: 0; /* Initial opacity for fade-in effect */
+    animation: fadeInFooter 2s forwards; /* Fade-in animation for footer */
+    animation-delay: 1s; /* Delay for footer animation */
+}
+
+@keyframes fadeInFooter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Transition effect for page navigation */
+.fade-out {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Added transform transition */
+}
+
+.fade-out.fade {
+    opacity: 0;
+    transform: translateX(-20px); /* Slide out effect */
+}
+
+/* Keyframes for slide-out transition */
+@keyframes slideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(-20px); }
+}
