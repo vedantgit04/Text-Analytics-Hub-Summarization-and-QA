@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Answering System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='qa.css') }}">
+</head>
+<body>
+    <button class="mode-toggle" onclick="toggleMode()">Switch to Dark Mode</button>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Question Answering System</h1>
+        </div>
+
+        <div class="chat-history" id="chat-history"></div>
+
+        <form id="qa-form">
+            <label for="context">Context:</label>
+            <textarea id="context" name="context" rows="6" placeholder="Enter the context here..."></textarea>
+            
+            <label for="question">Question:</label>
+            <input type="text" id="question" name="question" placeholder="Enter your question here...">
+            
+            <input type="button" value="Ask Question" onclick="getAnswer()">
+        </form>
+        <div class="spinner" id="spinner"></div>
+    </div>
+
+    <script>
+        function toggleMode() {
+            const body = document.body;
+            const container = document.querySelector('.container');
+            const chatHistory = document.querySelector('.chat-history');
+            const jumbotron = document.querySelector('.jumbotron');
+            const modeToggleBtn = document.querySelector('.mode-toggle');
+            const inputs = document.querySelectorAll('textarea, input[type="text"], input[type="button"]');
+            const labels = document.querySelectorAll('label');
+
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                container.classList.add('dark-mode');
+                chatHistory.classList.add('dark-mode');
+                jumbotron.classList.add('dark-mode');
+                inputs.forEach(input => input.classList.add('dark-mode'));
+                labels.forEach(label => label.classList.add('dark-mode'));
+                modeToggleBtn.classList.add('dark-mode');
+                modeToggleBtn.textContent = 'Switch to Light Mode';
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                container.classList.remove('dark-mode');
+                chatHistory.classList.remove('dark-mode');
+                jumbotron.classList.remove('dark-mode');
+                inputs.forEach(input => input.classList.remove('dark-mode'));
+                labels.forEach(label => label.classList.remove('dark-mode'));
+                modeToggleBtn.classList.remove('dark-mode');
+                modeToggleBtn.textContent = 'Switch to Dark Mode';
+            }
+        }
+
+        function getAnswer() {
+            const context = document.getElementById('context').value;
+            const question = document.getElementById('question').value;
+            const spinner = document.getElementById('spinner');
+            const chatHistory = document.getElementById('chat-history');
+        
+            if (!context || !question) {
+                alert('Please provide both context and question.');
+                return;
+            }
+            
+            // Show spinner
+            spinner.style.display = 'block';
+        
+            fetch('/qa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ context: context, question: question }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                spinner.style.display = 'none';
+                
+                // Add the question and answer to chat history at the top
+                const message = document.createElement('div');
+                message.classList.add('message', 'recent'); // Add recent class for green highlight
+                message.innerHTML = `<p class="question">You: ${question}</p>
+                                     <p class="answer">Answer: ${data.answer}</p>`;
+                
+                // Remove 'recent' class from all other messages
+                document.querySelectorAll('.message').forEach(msg => msg.classList.remove('recent'));
+                
+                chatHistory.insertBefore(message, chatHistory.firstChild);
+                chatHistory.scrollTop = 0; // Keep the chat history scrolled to the top
+
+                // Clear the question input for next question
+                document.getElementById('question').value = '';
+            })
+            .catch(error => {
+                spinner.style.display = 'none';
+                alert('Error fetching the answer. Please try again.');
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
